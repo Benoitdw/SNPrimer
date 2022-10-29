@@ -4,12 +4,14 @@ Small python library to search snp in primer by position or by sequence.
 
 ## Installation
 
+`pip install snprimer``
+
 ## Usage
 
 ### 🎯 By position 🎯
 
 ```python
-from SNPrimer import PositionRange
+from snprimer import PositionRange
 
 position = PositionRange("chr8",19818430, 19818440)
 print(position)
@@ -22,7 +24,7 @@ for snp in position.get_snp(max_vaf=0.05):
 
 ### 🔤 By sequence 🔤
 ```python
-from SNPrimer import Primer
+from snprimer import Primer
 
 primer = Primer("CACACAGATCAGAGGGCCAAC")
 print(primer)

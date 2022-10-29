@@ -1,5 +1,7 @@
 from pathlib import Path
+
 import tomllib
+
 
 def get_version():
     path = Path(__file__).resolve().parents[1] / "pyproject.toml"

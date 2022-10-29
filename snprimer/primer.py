@@ -1,8 +1,11 @@
-from dataclasses import dataclass, field, InitVar
 import logging
+from dataclasses import dataclass
+from dataclasses import field
+from dataclasses import InitVar
 
 import gget
-from SNPrimer.position_range import PositionRange
+
+from snprimer.position_range import PositionRange
 
 
 @dataclass
@@ -17,11 +20,13 @@ class Primer:
         else:
             self._make_blast(ref_version)
 
-    def _make_blast(self, ref_version:str):
-        for hit in gget.blat(self.seq,  seqtype="DNA",  assembly=ref_version ,json=True):
-            self.position_ranges.append(PositionRange(hit["chromosome"], hit["start"], hit['end'], hit['strand'], init_snp=True))
+    def _make_blast(self, ref_version: str):
+        for hit in gget.blat(self.seq, seqtype="DNA", assembly=ref_version, json=True):
+            self.position_ranges.append(
+                PositionRange(hit["chromosome"], hit["start"], hit["end"], hit["strand"], init_snp=True)
+            )
 
-    def infos(self, max_vaf=0.1): # TODO Remove (dont forget README)
+    def infos(self, max_vaf=0.1):  # TODO Remove (dont forget README)
         is_ok = True
         if len(self.position_ranges) > 1:
             is_ok = False
