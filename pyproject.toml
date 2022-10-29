@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "snprimer"
-version = "0.0.0"
+version = "0.1.0"
 description = ""
 authors = ["Benoitdw <bw@oncodna.com>"]
 readme = "README.md"
