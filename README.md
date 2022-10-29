@@ -1,8 +1,10 @@
 # SNPrimer
 
+Small python library to search snp in primer by position or by sequence.
+
 ## Installation
 
-## Usage 
+## Usage
 
 ### 🎯 By position 🎯
 
