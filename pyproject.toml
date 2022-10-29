@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "SNPrimer"
-version = "0.1.0"
+version = "0.1.1"
 description = "Small python library to search snp in primer by position or by sequence."
 authors = ["Benoitdw <bw@oncodna.com>"]
 readme = "README.md"
