@@ -19,6 +19,7 @@ pyfaidx = "^0.7.1"
 [tool.poetry.group.dev.dependencies]
 bump2version = "^1.0.1"
 pre-commit = "^2.20.0"
+pyfaidx = "^0.7.1"
 
 
 [build-system]
