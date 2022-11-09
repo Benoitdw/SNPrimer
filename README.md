@@ -4,7 +4,7 @@ Small python library to search snp in primer by position or by sequence.
 
 ## Installation
 
-`pip install snprimer``
+`pip install snprimer`
 
 ## Usage
 
@@ -31,4 +31,18 @@ print(primer)
 #Primer(seq='CACACAGATCAGAGGGCCAAC', position_ranges=[PositionRange(chr='chr1', start=26774827, end=26774847, strand='+', snp=[SNP(id='chr1:g.26774827G>A', rsid='rs2075289787', vaf=0), SNP(id='chr1:g.26774830A>G', rsid='rs986550282', vaf=0.0), SNP(id='chr1:g.26774842T>C', rsid='rs1440652363', vaf=0.0)])])
 primer.infos(max_vaf=0)
 #CACACAGATCAGAGGGCCAAC has snp with vaf > 0 : [SNP(id='chr1:g.26774827G>A', rsid='rs2075289787', vaf=0), SNP(id='chr1:g.26774830A>G', rsid='rs986550282', vaf=0.0), SNP(id='chr1:g.26774842T>C', rsid='rs1440652363', vaf=0.0)]
+```
+
+### 🖥️In silico PCR🖥️
+
+```python
+from pathlib import Path
+from snprimer import Primer, PrimerPair
+
+a = Primer("GGAGATGTACAGCGTGCCATAC", "hg19")
+b = Primer("TACATCTTGCTGAGGGGAAGGC", "hg19")
+pp = PrimerPair(a, b)
+pcr = pp.make_pcr(Path('/path/to/hg19.fa'))
+print(pcr)
+
 ```
