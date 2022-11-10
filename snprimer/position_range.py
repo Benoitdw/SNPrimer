@@ -1,4 +1,4 @@
-import logging
+# import logging
 from dataclasses import dataclass
 from dataclasses import field
 from dataclasses import InitVar
@@ -20,8 +20,8 @@ class PositionRange:
     def __post_init__(self, init_snp):
         if init_snp:
             self.search_snp()
-        else:
-            logging.info(f"{self} is not initialised")
+        # else:
+        #     logging.info(f"{self} is not initialised")
 
     def search_snp(self) -> list[SNP]:
         for hit in myvariant.MyVariantInfo().query(f"{self.chr}:{self.start}-{self.end}", fields="dbsnp")["hits"]:
