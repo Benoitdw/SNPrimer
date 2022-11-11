@@ -8,9 +8,10 @@ from snprimer import Primer
 
 
 class PrimerPair:
-    def __init__(self, forward_primer: Primer, reverse_primer: Primer, compatibility: dict = None):
+    def __init__(self, forward_primer: Primer, reverse_primer: Primer, name: str = None, compatibility: dict = None):
         self.forward_primer = forward_primer
         self.reverse_primer = reverse_primer
+        self.name = name
         self.compatibility = compatibility or {}
         self._check_compatibility()
 
@@ -36,9 +37,9 @@ class PrimerPair:
         hits = []
         fasta_handler = Fasta(ref_fasta_file)
         for mate_pair in self._make_mate_pair():
-            hits.append(
-                fasta_handler[mate_pair[0].chr][mate_pair[0].start - 1 : mate_pair[1].end]
-            )  # -1 because of difference of index
+            hit = fasta_handler[mate_pair[0].chr][mate_pair[0].start - 1 : mate_pair[1].end]
+            hit.mate_pair = mate_pair
+            hits.append(hit)  # -1 because of difference of index
         return hits
 
 
