@@ -45,4 +45,58 @@ print(pcr)
 ```
 
 
-# CLI TODO
+
+# CLI
+
+You can also use SNPrimer in cli with two options :
+
+* check will check the presence of snp in a position range
+* pcr will make the insilico pcr
+
+## Installation
+
+```bash
+git clone git@github.com:Benoitdw/SNPrimer.git
+cd SNPrimer
+python -m venv venv # recommended work in a virtual environment
+source venv/bin/activate # Recommended activate the virtual environment
+
+
+poetry install
+# OR pip install .
+```
+
+
+
+## Check
+
+```bash
+Usage: main.py check [OPTIONS] POSITION_FILE [OUTPUT]
+
+Options:
+  --vaf FLOAT  minimum snp vaf to report
+```
+
+`python main.py check --vaf 0.00 tests/files/position.tsv tests/files/output_position.tsv`
+
+will produce the `output_position.tsv` file you can see in `tests/files` directory
+
+
+
+## PCR
+
+```bash
+Usage: main.py pcr [OPTIONS] PRIMER_FILE [OUTPUT]
+
+Options:
+  --snp / --no-snp       Check for the presence of SNP in primer.
+  --vaf FLOAT            minimum snp vaf to report
+  --ref_fasta_file PATH  Path to the reference fasta file.  [required]
+  --ref [hg19|hg38]
+  --help                 Show this message and exit.
+
+```
+
+`main.py pcr --snp --vaf 0 --ref_fasta_file tests/ref/hg19.fasta --ref hg19 tests/files/test_primer.tsv tests/files/output.tsv `
+
+will produce the `output.tsv` you can see in `tests/files` directory
