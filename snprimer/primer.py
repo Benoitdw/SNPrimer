@@ -3,10 +3,12 @@ from dataclasses import dataclass
 from dataclasses import field
 
 import gget
+from dataclasses_json import dataclass_json
 
 from snprimer.position_range import PositionRange
 
 
+@dataclass_json
 @dataclass
 class Primer:
     seq: str
@@ -30,4 +32,4 @@ class Primer:
 
 if __name__ == "__main__":
     a = Primer("CACACAGATCAGAGGGCCAAC")
-    a.infos(0)
+    print(a.to_dict())

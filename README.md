@@ -44,6 +44,39 @@ pcr = pp.make_pcr(Path('/path/to/hg19.fa'))
 print(pcr)
 ```
 
+### Design
+```python
+from snprimer import PrimerMaker, PositionRange
+from pathlib import Path
+seq_args = {
+        }
+global_args = {
+        "PRIMER_EXPLAIN_FLAG": 1,
+        "PRIMER_MAX_END_STABILITY": 9.0,
+        "PRIMER_MAX_LIBRARY_MISPRIMING": 18.00,
+        "PRIMER_PAIR_MAX_LIBRARY_MISPRIMING": 50.00,
+        "PRIMER_MIN_SIZE": 17,
+        "PRIMER_OPT_SIZE": 22,
+        "PRIMER_MAX_SIZE": 27,
+        "PRIMER_MIN_TM": 58,
+        "PRIMER_OPT_TM": 61,
+        "PRIMER_MAX_TM": 63,
+        "PRIMER_MAX_DIFF_TM": 100,
+        "PRIMER_MIN_GC": 20,
+        "PRIMER_MAX_GC": 80,
+        "PRIMER_SELF_END": 9.00,
+        "PRIMER_MAX_POLY_X": 5,
+        "PRIMER_GC_CLAMP": 0,
+        "PRIMER_PRODUCT_SIZE_RANGE": [[70, 160]],
+    }
+position_range = PositionRange("chr1",27100919,27100919)
+ref_fasta = Path("/path/to/fasta")
+print(PrimerMaker(ref_fasta,
+                  seq_args, global_args).get_primers(position_range)[0]
+      .make_pcr(ref_fasta))
+#[>chr1:27100876-27100999
+#GGAGATGTACAGCGTGCCATACAGCACTGGGCAGGGGCAGCCTCAGCAGCAGCAGTTGCCCCCAGCCCAGCCCCAGCCTGCCAGCCAGCAACAAGCTGCCCAGCCTTCCCCTCAGCAAGATGTA]
+```
 
 
 # CLI
@@ -66,9 +99,7 @@ poetry install
 # OR pip install .
 ```
 
-
-
-## Check
+## 🎯 Check 🎯
 
 ```bash
 Usage: main.py check [OPTIONS] POSITION_FILE [OUTPUT]
@@ -81,9 +112,7 @@ Options:
 
 will produce the `output_position.tsv` file you can see in `tests/files` directory
 
-
-
-## PCR
+## 🖥️ PCR 🖥️
 
 ```bash
 Usage: main.py pcr [OPTIONS] PRIMER_FILE [OUTPUT]
@@ -100,3 +129,43 @@ Options:
 `main.py pcr --snp --vaf 0 --ref_fasta_file tests/ref/hg19.fasta --ref hg19 tests/files/test_primer.tsv tests/files/output.tsv `
 
 will produce the `output.tsv` you can see in `tests/files` directory
+
+## 🔎 DESIGN 🔎
+This utilities aims to produce a list of primer for a range of position.
+
+```bash
+Usage: main.py design [OPTIONS] BED_FILE [OUTPUT]
+
+Options:
+  --snp / --no-snp       Check for the presence of SNP in primer.
+  --vaf FLOAT            minimum snp vaf to report
+  --n_primers INTEGER    number of primers to generate by position
+  --ref_fasta_file PATH  Path to the reference fasta file.  [required]
+  --ref [hg19|hg38]
+  --config FILENAME
+  --help                 Show this message and exit.
+```
+An example of config file can be find in tests/files/config.json. This file stores the configuration needed by primer3 to design primer.
+If no config file is given. default config is the following:
+
+```json
+{
+                "PRIMER_EXPLAIN_FLAG": 1,
+                "PRIMER_MAX_END_STABILITY": 9.0,
+                "PRIMER_MAX_LIBRARY_MISPRIMING": 18.00,
+                "PRIMER_PAIR_MAX_LIBRARY_MISPRIMING": 50.00,
+                "PRIMER_MIN_SIZE": 17,
+                "PRIMER_OPT_SIZE": 22,
+                "PRIMER_MAX_SIZE": 27,
+                "PRIMER_MIN_TM": 58,
+                "PRIMER_OPT_TM": 61,
+                "PRIMER_MAX_TM": 63,
+                "PRIMER_MAX_DIFF_TM": 100,
+                "PRIMER_MIN_GC": 20,
+                "PRIMER_MAX_GC": 80,
+                "PRIMER_SELF_END": 9.00,
+                "PRIMER_MAX_POLY_X": 5,
+                "PRIMER_GC_CLAMP": 0,
+                "PRIMER_PRODUCT_SIZE_RANGE": [[70, 160]]
+}
+```

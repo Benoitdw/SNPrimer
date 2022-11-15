@@ -13,6 +13,8 @@ myvariant = "^1.0.0"
 gget = "^0.3.11"
 click = "^8.1.3"
 pyfaidx = "^0.7.1"
+dataclasses-json = "^0.5.7"
+primer3-py = "^0.6.1"
 
 [tool.poetry.group.dev]
 

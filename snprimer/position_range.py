@@ -21,6 +21,9 @@ class PositionRange:
         if init_snp:
             self.search_snp()
 
+    def __len__(self):
+        return self.end - self.start
+
     def search_snp(self):
         for hit in myvariant.MyVariantInfo().query(f"{self.chr}:{self.start}-{self.end}", fields="dbsnp")["hits"]:
             if (
