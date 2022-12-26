@@ -1,9 +1,10 @@
 # import logging
-from dataclasses import dataclass
-from dataclasses import field
-from dataclasses import InitVar
+from dataclasses import InitVar, dataclass, field
+from pathlib import Path
+from typing import Optional
 
 import myvariant
+from pyfaidx import Fasta
 
 from snprimer.snp import SNP
 
@@ -13,9 +14,10 @@ class PositionRange:
     chr: str
     start: int
     end: int
-    strand: str = None
-    init_snp: InitVar[bool] = True
+    strand: Optional[str] = None
+    init_snp: InitVar[bool] = False
     snp: list[SNP] = field(default_factory=list)
+    seq: Optional[str] = None
 
     def __post_init__(self, init_snp):
         if init_snp:
@@ -35,3 +37,10 @@ class PositionRange:
         if not self.snp:
             self.search_snp()
         return [snp for snp in self.snp if snp.vaf >= max_vaf]
+
+    def set_seq(self, ref_fasta_file: Path):
+        fasta_handler = Fasta(ref_fasta_file)
+        if self.strand == "-":
+            self.seq = fasta_handler[self.chr][self.start - 1 : self.end].reverse.complement.seq
+        else:
+            self.seq = fasta_handler[self.chr][self.start - 1 : self.end].seq
